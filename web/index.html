@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>AgentFlow — AI Software Engineering Assistant</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<div class="app">
+
+  <!-- Rail: the signature element. A vertical pipeline of stages, connected
+       by a track that "flows" (animated) while a request is in progress. -->
+  <aside class="rail">
+    <div class="rail-brand">
+      <span class="rail-brand-mark">AF</span>
+      <div class="rail-brand-text">
+        <span class="rail-brand-name">AgentFlow</span>
+        <span class="rail-brand-sub">AI SWE ASSISTANT</span>
+      </div>
+    </div>
+
+    <nav class="rail-track" id="railTrack">
+      <!-- stage nodes injected by app.js -->
+    </nav>
+
+    <div class="rail-session">
+      <label class="rail-session-label" for="sessionInput">SESSION</label>
+      <input id="sessionInput" class="rail-session-input" type="text" placeholder="default" spellcheck="false" />
+      <div class="rail-session-actions">
+        <button id="clearSessionBtn" class="rail-session-btn" title="Clear this session's memory">clear</button>
+        <button id="sessionsListBtn" class="rail-session-btn" title="Show saved sessions">saved</button>
+      </div>
+      <div id="sessionsList" class="rail-sessions-list hidden"></div>
+    </div>
+  </aside>
+
+  <!-- Main -->
+  <main class="main">
+    <header class="stage-header">
+      <h1 id="stageTitle">Plan</h1>
+      <p id="stageDesc">Turn a requirement into a structured implementation plan.</p>
+    </header>
+
+    <section class="stage-body" id="stageBody">
+
+      <!-- Text-only input (Plan) -->
+      <div class="input-block" id="block-requirement">
+        <textarea id="requirementInput" class="input-textarea" rows="6"
+          placeholder="e.g. Add JWT-based login with refresh tokens and rate limiting"></textarea>
+      </div>
+
+      <!-- Code input (Docs / Review / Bugs / Improve) -->
+      <div class="input-block hidden" id="block-code">
+        <div class="code-toolbar">
+          <label for="languageSelect">Language</label>
+          <select id="languageSelect">
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+            <option value="typescript">TypeScript</option>
+            <option value="java">Java</option>
+            <option value="cpp">C++</option>
+            <option value="c">C</option>
+            <option value="csharp">C#</option>
+            <option value="go">Go</option>
+            <option value="ruby">Ruby</option>
+            <option value="php">PHP</option>
+            <option value="rust">Rust</option>
+            <option value="kotlin">Kotlin</option>
+            <option value="swift">Swift</option>
+            <option value="sql">SQL</option>
+            <option value="bash">Bash</option>
+            <option value="text">Other</option>
+          </select>
+        </div>
+        <textarea id="codeInput" class="input-textarea code" rows="14"
+          placeholder="Paste your code here…" spellcheck="false"></textarea>
+      </div>
+
+      <!-- Chat (freeform) -->
+      <div class="input-block hidden" id="block-chat">
+        <div id="chatTranscript" class="chat-transcript"></div>
+        <div class="chat-input-row">
+          <input id="chatInput" type="text" placeholder="Ask anything… (context carries across turns)" />
+        </div>
+      </div>
+
+      <div class="run-row">
+        <button id="runBtn" class="run-btn">
+          <span id="runBtnLabel">Run plan</span>
+          <span class="run-btn-arrow">→</span>
+        </button>
+        <span id="runStatus" class="run-status"></span>
+      </div>
+
+      <!-- Output (hidden for chat, which renders inline in the transcript) -->
+      <div class="output-panel" id="outputPanel">
+        <div class="output-panel-head">
+          <span class="output-dot"></span>
+          <span>OUTPUT</span>
+        </div>
+        <div id="outputContent" class="output-content">
+          <p class="output-empty">Results will appear here.</p>
+        </div>
+      </div>
+
+    </section>
+  </main>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
